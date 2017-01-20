@@ -19,13 +19,12 @@ static RT_TASK ma_tache;
 
 void mon_code(int arg) {
 
-  RTIME t;
+  RTIME t=rt_get_time();
   static int boucle = N_BOUCLE ;
 
-  while (boucle--)
-  {
-
-    /* a completer */
+  while (boucle--){
+    rt_task_wait_period();
+    printk("Hello world, time=%llu\n", count2nano(rt_get_time()-t));
   }
 }
 
@@ -45,7 +44,7 @@ static int mon_init(void) {
     
     start_rt_timer(nano2count(TICK_PERIOD));
 
-    /* a completer */
+	rt_task_make_periodic(&ma_tache, rt_get_time(), nano2count(PERIODE)); 
 
   }
   return ierr;
