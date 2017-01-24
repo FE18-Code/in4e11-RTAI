@@ -32,6 +32,8 @@
 *.dSYM/
 *.su
 
-# Temp compil files
+# Temp files
 *.cmd
+*.swp
+*.tmp*
 
