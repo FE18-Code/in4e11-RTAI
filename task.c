@@ -14,8 +14,21 @@ MODULE_LICENSE("GPL");
 #define PERIODE     1000000000    //  1 s
 #define TICK_PERIOD 1000000    //  1 ms
 #define N_BOUCLE    10
+#define K_MAX 68000000
 
 static RT_TASK ma_tache;
+
+unsigned long k = K_MAX;
+
+void capacite(int c) {
+
+   while (c-->1){
+      while (k-->1){
+        nop();
+      }
+      k=K_MAX;
+   }
+}
 
 void mon_code(int arg) {
 
@@ -23,8 +36,10 @@ void mon_code(int arg) {
   static int boucle = N_BOUCLE ;
 
   while (boucle--){
-    rt_task_wait_period();
+    //rt_task_wait_period();
+    capacite(2);
     printk("Hello world, time=%llu\n", count2nano(rt_get_time()-t));
+    
   }
 }
 
@@ -39,8 +54,10 @@ static int mon_init(void) {
 		      STACK_SIZE, PRIORITE, 0, 0);
   printk("[tache %d] cree code retour %d par programme %s\n",
 	 NUMERO,ierr,__FILE__);
+	 
 
   if (!ierr) {
+    
     
     start_rt_timer(nano2count(TICK_PERIOD));
 
