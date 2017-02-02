@@ -9,7 +9,7 @@ MODULE_LICENSE("GPL");
 #include <rtai_sched.h>
 
 /* tasks params data, prio, signal */
-#define NUMERO 1
+#define TASK_NODATA (long int)0
 #define PRIORITE 1
 #define INT_NOHANDLER 0
 
@@ -25,15 +25,15 @@ MODULE_LICENSE("GPL");
 
 #define PERIODE     1000000000    //  1 s
 #define TICK_PERIOD 1000000    //  1 ms
-#define N_BOUCLE    100
-#define K_MAX 68000000
+#define N_BOUCLE 10
+#define K_MAX 140000000
 
 #define T1_CAPACITY 1
-#define T1_PERIOD 4000000
+#define T1_PERIOD 4
 #define T2_CAPACITY 2
-#define T2_PERIOD 6000000
+#define T2_PERIOD 6
 #define T3_CAPACITY 3
-#define T3_PERIOD 8000000 
+#define T3_PERIOD 8 
 
 static RT_TASK task1;
 static RT_TASK task2;
@@ -50,12 +50,12 @@ void capacity_measure(){
   RTIME t=rt_get_time();
   capacity(1);
   capacity_time_unit = rt_get_time()-t;
-  printk("Capacity first run : took %llu\n", count2nano(capacity_time_unit));
+  printk("Capacity first run : took %lluns (count=%llu)\n", count2nano(capacity_time_unit), capacity_time_unit);
 }
 
 void capacity(int c){
   unsigned long k = K_MAX;
-  while(c-->1){
+  while(c-->=1){
     while(k-->1){
       nop();
     }
@@ -66,9 +66,9 @@ void capacity(int c){
 void t1(int arg){
   static int boucle = N_BOUCLE;
   while(boucle--){
-    printk("t1-Alive time=%llu\n", count2nano(rt_get_time()-module_time_ref));
+    printk("t1-Alive time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     capacity(T1_CAPACITY); /* simulate any job */
-    printk("t1-Dead time=%llu\n", count2nano(rt_get_time()-module_time_ref));
+    printk("t1-Dead time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     rt_task_wait_period();
   }
 }
@@ -76,9 +76,9 @@ void t1(int arg){
 void t2(int arg){
   static int boucle = N_BOUCLE;
   while(boucle--){
-    printk("t2-Alive time=%llu\n", count2nano(rt_get_time()-module_time_ref));
+    printk("t2-Alive time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     capacity(T2_CAPACITY); /* simulate any job */
-    printk("t2-Dead time=%llu\n", count2nano(rt_get_time()-module_time_ref));
+    printk("t2-Dead time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     rt_task_wait_period();
   }
 }
@@ -86,9 +86,9 @@ void t2(int arg){
 void t3(int arg){
   static int boucle = N_BOUCLE;
   while(boucle--){
-    printk("t3-Alive time=%llu\n", count2nano(rt_get_time()-module_time_ref));
+    printk("t3-Alive time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     capacity(T3_CAPACITY); /* simulate any job */
-    printk("t3-Dead time=%llu\n", count2nano(rt_get_time()-module_time_ref));
+    printk("t3-Dead time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     rt_task_wait_period();
   }
 }
@@ -97,24 +97,24 @@ static int mon_init(void) {
   int ierr;
   RTIME now;
 
-  //capacity_measure(); /* benchmark : time to run capacity() fct */
-
   rt_set_oneshot_mode();
   
+  start_rt_timer(nano2count(TICK_PERIOD));
+  capacity_measure(); /* benchmark : time to run capacity() fct */
+  module_time_ref=rt_get_time();
+  
   /* declare tasks */
-  ierr = rt_task_init_cpuid(&task1, t1, NUMERO, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
-  ierr = rt_task_init_cpuid(&task2, t2, NUMERO, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
-  ierr = rt_task_init_cpuid(&task3, t3, NUMERO, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
-  printk("[tache %d] cree code retour %d par programme %s\n", NUMERO, ierr, __FILE__);
+  ierr = rt_task_init_cpuid(&task1, t1, TASK_NODATA, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  printk("[tache %d periode=%lluns] cree code retour %d par programme %s\n", 1, T1_PERIOD*count2nano(capacity_time_unit), ierr, __FILE__);
+  ierr = rt_task_init_cpuid(&task2, t2, TASK_NODATA, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  printk("[tache %d periode=%lluns] cree code retour %d par programme %s\n", 2, T2_PERIOD*count2nano(capacity_time_unit), ierr, __FILE__);
+  ierr = rt_task_init_cpuid(&task3, t3, TASK_NODATA, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  printk("[tache %d periode=%lluns] cree code retour %d par programme %s\n", 3, T3_PERIOD*count2nano(capacity_time_unit), ierr, __FILE__);
 
   if(!ierr){ /* if OK : run them */
-    start_rt_timer(nano2count(TICK_PERIOD));
-    capacity_measure(); /* benchmark : time to run capacity() fct */
-    module_time_ref=rt_get_time();
-    
-    rt_task_make_periodic(&task1, nano2count(rt_get_time_ns()+TICK_PERIOD), nano2count(T1_PERIOD*capacity_time_unit));
-    rt_task_make_periodic(&task2, nano2count(rt_get_time_ns()+TICK_PERIOD), nano2count(T2_PERIOD*capacity_time_unit));
-    rt_task_make_periodic(&task3, nano2count(rt_get_time_ns()+TICK_PERIOD), nano2count(T3_PERIOD*capacity_time_unit));  
+    rt_task_make_periodic(&task1, module_time_ref+nano2count(TICK_PERIOD), nano2count(T1_PERIOD*count2nano(capacity_time_unit)));
+    rt_task_make_periodic(&task2, module_time_ref+nano2count(TICK_PERIOD), nano2count(T2_PERIOD*count2nano(capacity_time_unit)));
+    rt_task_make_periodic(&task3, module_time_ref+nano2count(TICK_PERIOD), nano2count(T3_PERIOD*count2nano(capacity_time_unit)));  
   }
   return ierr;
 }
