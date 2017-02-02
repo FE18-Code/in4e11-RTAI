@@ -8,14 +8,25 @@ MODULE_LICENSE("GPL");
 #include <asm/rtai.h>
 #include <rtai_sched.h>
 
-#define NUMERO      1
-#define PRIORITE    1
-#define STACK_SIZE  2000
+/* tasks params data, prio, signal */
+#define NUMERO 1
+#define PRIORITE 1
+#define INT_NOHANDLER 0
+
+/* task_init default stack size */
+#define STACK_SIZE 2000
+
+/* task_init default cpu */
+#define CPU_ID 0
+
+/* task_init fpu option */
+#define FPU_NOFPU 0
+#define FPU_USEFPU 1
+
 #define PERIODE     1000000000    //  1 s
 #define TICK_PERIOD 1000000    //  1 ms
 #define N_BOUCLE    100
 #define K_MAX 68000000
-#define CPU_ID 0
 
 #define T1_CAPACITY 1
 #define T1_PERIOD 4000000
@@ -28,7 +39,7 @@ static RT_TASK task1;
 static RT_TASK task2;
 static RT_TASK task3;
 
-RTIME capacity_time_unit; /* time to run capacite() = unit */
+RTIME capacity_time_unit; /* time needed to run capacite() = unit */
 RTIME module_time_ref; /* time @module init */
 
 /* Prototypes */
@@ -91,9 +102,9 @@ static int mon_init(void) {
   rt_set_oneshot_mode();
   
   /* declare tasks */
-  ierr = rt_task_init_cpuid(&task1, t1, NUMERO, STACK_SIZE, PRIORITE, 0, 0, CPU_ID);
-  ierr = rt_task_init_cpuid(&task2, t2, NUMERO, STACK_SIZE, PRIORITE, 0, 0, CPU_ID);
-  ierr = rt_task_init_cpuid(&task3, t3, NUMERO, STACK_SIZE, PRIORITE, 0, 0, CPU_ID);
+  ierr = rt_task_init_cpuid(&task1, t1, NUMERO, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  ierr = rt_task_init_cpuid(&task2, t2, NUMERO, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  ierr = rt_task_init_cpuid(&task3, t3, NUMERO, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
   printk("[tache %d] cree code retour %d par programme %s\n", NUMERO, ierr, __FILE__);
 
   if(!ierr){ /* if OK : run them */
@@ -101,9 +112,9 @@ static int mon_init(void) {
     capacity_measure(); /* benchmark : time to run capacity() fct */
     module_time_ref=rt_get_time();
     
-    rt_task_make_periodic(&task1, nano2count(rt_get_time_ns()+10000000), nano2count(T1_PERIOD*capacity_time_unit));
-    rt_task_make_periodic(&task2, nano2count(rt_get_time_ns()+10000000), nano2count(T2_PERIOD*capacity_time_unit));
-    rt_task_make_periodic(&task3, nano2count(rt_get_time_ns()+10000000), nano2count(T3_PERIOD*capacity_time_unit));  
+    rt_task_make_periodic(&task1, nano2count(rt_get_time_ns()+TICK_PERIOD), nano2count(T1_PERIOD*capacity_time_unit));
+    rt_task_make_periodic(&task2, nano2count(rt_get_time_ns()+TICK_PERIOD), nano2count(T2_PERIOD*capacity_time_unit));
+    rt_task_make_periodic(&task3, nano2count(rt_get_time_ns()+TICK_PERIOD), nano2count(T3_PERIOD*capacity_time_unit));  
   }
   return ierr;
 }
