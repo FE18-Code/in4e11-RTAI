@@ -1,0 +1,22 @@
+I-pipe: head domain RTAI registered.
+RTAI[hal]: compiled with gcc version 4.7.2 (Debian 4.7.2-5) .
+RTAI[hal]: mounted (IPIPE-NOTHREADS, IMMEDIATE (INTERNAL IRQs DISPATCHED), ISOL_CPUS_MASK: 0).
+SYSINFO: CPUs 1, LINUX APIC IRQ 4352, TIM_FREQ 106002002, CLK_FREQ 3392081000, CPU_FREQ 3392081000
+RTAI_APIC_TIMER_IPI: RTAI DEFINED 4354, VECTOR 4354; LINUX_APIC_TIMER_IPI: RTAI DEFINED 4352, VECTOR 4352
+TIMER NAME: lapic; VARIOUSLY FOUND APIC FREQs: 106002002, 106002002, 0
+RTAI[malloc]: global heap size = 2097152 bytes, <BSD>.
+, kstacks pool size = 524288 bytes.
+RTAI[sched]: hard timer type/freq = APIC/106002002(Hz); default timing: periodic; linear timed lists.
+RTAI[sched]: Linux timer freq = 250 (Hz), TimeBase freq = 3392081000 hz.
+RTAI[sched]: timer setup = 9 ns, resched latency = 3934 ns.
+[tache 1] cree code retour 0 par programme /tmp/aa-wd/in4e11-RTAI/task.c
+Hello world, time=1002313351
+Hello world, time=2000971217
+Hello world, time=3000210784
+Hello world, time=4001463018
+Hello world, time=5001799715
+Hello world, time=6001180480
+RTAI[malloc]: unloaded.
+RTAI[sched]: unloaded (forced hard/soft/hard transitions: traps 0, syscalls 0).
+I-pipe: head domain RTAI unregistered.
+RTAI[hal]: unmounted.
