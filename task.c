@@ -73,11 +73,11 @@ static int mon_init(void) {
   module_time_ref=rt_get_time();
   
   /* declare tasks */
-  ierr = rt_task_init_cpuid(&task1, t1, TASK_NODATA, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  ierr = rt_task_init_cpuid(&task1, t1, TASK_NODATA, STACK_SIZE, T1_PRIORITY, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
   printk("[tache %d periode=%lluns] cree code retour %d par programme %s\n", 1, T1_PERIOD*count2nano(capacity_time_unit), ierr, __FILE__);
-  ierr = rt_task_init_cpuid(&task2, t2, TASK_NODATA, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  ierr = rt_task_init_cpuid(&task2, t2, TASK_NODATA, STACK_SIZE, T2_PRIORITY, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
   printk("[tache %d periode=%lluns] cree code retour %d par programme %s\n", 2, T2_PERIOD*count2nano(capacity_time_unit), ierr, __FILE__);
-  ierr = rt_task_init_cpuid(&task3, t3, TASK_NODATA, STACK_SIZE, PRIORITE, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
+  ierr = rt_task_init_cpuid(&task3, t3, TASK_NODATA, STACK_SIZE, T3_PRIORITY, FPU_NOFPU, INT_NOHANDLER, CPU_ID);
   printk("[tache %d periode=%lluns] cree code retour %d par programme %s\n", 3, T3_PERIOD*count2nano(capacity_time_unit), ierr, __FILE__);
 
   if(!ierr){ /* if OK : run them */

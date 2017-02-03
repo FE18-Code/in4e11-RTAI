@@ -14,7 +14,6 @@ MODULE_LICENSE("GPL");
 
 /* tasks params data, prio, signal */
 #define TASK_NODATA (long int)0
-#define PRIORITE 1
 #define INT_NOHANDLER 0
 
 /* task_init default stack size */
