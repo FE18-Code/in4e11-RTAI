@@ -38,7 +38,7 @@ void t1(int arg){
     printk("t1-Alive time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     capacity(T1_CAPACITY); /* simulate any job */
     printk("t1-Dead time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
-    rt_task_wait_period();
+    rt_task_set_resume_end_times(-nano2count(T1_PERIOD*count2nano(capacity_time_unit)), -nano2count(T1_PERIOD*count2nano(capacity_time_unit)));
   }
 }
 
@@ -48,7 +48,7 @@ void t2(int arg){
     printk("t2-Alive time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     capacity(T2_CAPACITY); /* simulate any job */
     printk("t2-Dead time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
-    rt_task_wait_period();
+    rt_task_set_resume_end_times(-nano2count(T2_PERIOD*count2nano(capacity_time_unit)), -nano2count(T2_PERIOD*count2nano(capacity_time_unit)));
   }
 }
 
@@ -58,7 +58,7 @@ void t3(int arg){
     printk("t3-Alive time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
     capacity(T3_CAPACITY); /* simulate any job */
     printk("t3-Dead time=%lluns\n", count2nano(rt_get_time()-module_time_ref));
-    rt_task_wait_period();
+    rt_task_set_resume_end_times(-nano2count(T3_PERIOD*count2nano(capacity_time_unit)), -nano2count(T3_PERIOD*count2nano(capacity_time_unit)));
   }
 }
 
