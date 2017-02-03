@@ -1,0 +1,78 @@
+RTAI[hal]: compiled with gcc version 4.7.2 (Debian 4.7.2-5) .
+RTAI[hal]: mounted (IPIPE-NOTHREADS, IMMEDIATE (INTERNAL IRQs DISPATCHED), ISOL_CPUS_MASK: 0).
+SYSINFO: CPUs 1, LINUX APIC IRQ 4352, TIM_FREQ 8333809, CLK_FREQ 3200122000, CPU_FREQ 3200122000
+RTAI_APIC_TIMER_IPI: RTAI DEFINED 4354, VECTOR 4354; LINUX_APIC_TIMER_IPI: RTAI DEFINED 4352, VECTOR 4352
+TIMER NAME: lapic; VARIOUSLY FOUND APIC FREQs: 8333809, 8333809, 8333750
+RTAI[malloc]: global heap size = 2097152 bytes, <BSD>.
+, kstacks pool size = 524288 bytes.
+RTAI[sched]: hard timer type/freq = APIC/8333809(Hz); default timing: periodic; linear timed lists.
+RTAI[sched]: Linux timer freq = 250 (Hz), TimeBase freq = 3200122000 hz.
+RTAI[sched]: timer setup = 119 ns, resched latency = 3823 ns.
+Capacity first run : took 87654830ns (count=280506152)
+[tache 1 periode=613583810ns] cree code retour 0 par programme /tmp/wd-aa/in4e12-RTAI/task.c
+[tache 2 periode=964203130ns] cree code retour 0 par programme /tmp/wd-aa/in4e12-RTAI/task.c
+[tache 3 periode=1139512790ns] cree code retour 0 par programme /tmp/wd-aa/in4e12-RTAI/task.c
+t1-Alive time=998940ns
+t1-Dead time=175994572ns
+t2-Alive time=175995922ns
+t2-Dead time=350989572ns
+t3-Alive time=350989943ns
+t1-Alive time=614586786ns
+t1-Dead time=877077000ns
+t2-Alive time=965201659ns
+t2-Dead time=1140195206ns
+t3-Dead time=1225961772ns
+t3-Alive time=1225962075ns
+t1-Alive time=1228167033ns
+t1-Dead time=1403160589ns
+t3-Dead time=1838440299ns
+t1-Alive time=1842496648ns
+t1-Dead time=2017490970ns
+t2-Alive time=2017492146ns
+t2-Dead time=2192486197ns
+t3-Alive time=2282521791ns
+t1-Alive time=2455333705ns
+t1-Dead time=2630327908ns
+t2-Alive time=2893609581ns
+t2-Dead time=3068603158ns
+t1-Alive time=3068917203ns
+t1-Dead time=3243910765ns
+t3-Dead time=3244992414ns
+t1-Alive time=3732662995ns
+t1-Dead time=3907657025ns
+t2-Alive time=3907657938ns
+t2-Dead time=4170148174ns
+t3-Alive time=4170148500ns
+t1-Alive time=4296088545ns
+t1-Dead time=4558578767ns
+t2-Alive time=4822015461ns
+t1-Alive time=4909668647ns
+t1-Dead time=5172159222ns
+t2-Dead time=5303328005ns
+t3-Dead time=5414406670ns
+t3-Alive time=5414406905ns
+t1-Alive time=5523255442ns
+t1-Dead time=5785745657ns
+t2-Alive time=5786217295ns
+t2-Dead time=6048707525ns
+t3-Dead time=6431302965ns
+t3-Alive time=6431303205ns
+t2-Alive time=6750420058ns
+t2-Dead time=7012910296ns
+t3-Dead time=7218776871ns
+t3-Alive time=7218777102ns
+t2-Alive time=7714623308ns
+t2-Dead time=7977113545ns
+t3-Dead time=8006249235ns
+t3-Alive time=8006249527ns
+t3-Dead time=8443733156ns
+t2-Alive time=8915108756ns
+t2-Dead time=9090102831ns
+t3-Alive time=9119111868ns
+t3-Dead time=9556595839ns
+t3-Alive time=10259178392ns
+t3-Dead time=10696663209ns
+RTAI[malloc]: unloaded.
+RTAI[sched]: unloaded (forced hard/soft/hard transitions: traps 0, syscalls 0).
+I-pipe: head domain RTAI unregistered.
+RTAI[hal]: unmounted.
