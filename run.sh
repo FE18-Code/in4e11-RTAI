@@ -9,6 +9,7 @@ EOF
 read junk
 sudo insmod /usr/lib/realtime/modules/rtai_hal.ko
 sudo insmod /usr/lib/realtime/modules/rtai_sched.ko
+sudo insmod /usr/lib/realtime/modules/rtai_sem.ko
 
 sudo insmod $1.ko
 
@@ -17,6 +18,7 @@ echo "Type <return> to remove modules"
 read junk
 
 sudo rmmod $1
+sudo rmmod rtai_sem
 sudo rmmod rtai_sched
 sudo rmmod rtai_hal
 

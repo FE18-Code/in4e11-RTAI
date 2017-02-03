@@ -9,8 +9,9 @@ MODULE_LICENSE("GPL");
 
 #include <asm/rtai.h>
 #include <rtai_sched.h>
+#include <rtai_sem.h>
 
-#include "taskset_B.h"
+#include "taskset_sem.h"
 
 /* tasks params data, prio, signal */
 #define TASK_NODATA (long int)0
@@ -25,6 +26,10 @@ MODULE_LICENSE("GPL");
 /* task_init fpu option */
 #define FPU_NOFPU 0
 #define FPU_USEFPU 1
+
+/* sems init values */
+#define SEM_INIT_WAIT 0
+#define SEM_INIT_PASS 1
 
 #define PERIODE     1000000000    //  1 s
 #define TICK_PERIOD 1000000    //  1 ms
