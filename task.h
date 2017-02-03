@@ -10,7 +10,7 @@ MODULE_LICENSE("GPL");
 #include <asm/rtai.h>
 #include <rtai_sched.h>
 
-#include "taskset_B.h"
+#include "taskset_A.h"
 
 /* tasks params data, prio, signal */
 #define TASK_NODATA (long int)0
