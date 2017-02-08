@@ -26,6 +26,12 @@ MODULE_LICENSE("GPL");
 #define FPU_NOFPU 0
 #define FPU_USEFPU 1
 
+/* tasks preemption */
+//#define HAS_PREEMPT_ALWAYS /* uncomment to activate the use of rt_preempt_always() */
+#define NO_PREEMPT 0
+#define PREEMPT 1
+
+/* time definitions */
 #define PERIODE     1000000000    //  1 s
 #define TICK_PERIOD 1000000    //  1 ms
 #define N_BOUCLE 10

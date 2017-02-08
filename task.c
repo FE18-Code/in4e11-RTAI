@@ -67,7 +67,10 @@ static int mon_init(void) {
   RTIME now;
 
   rt_set_oneshot_mode();
-  
+#ifdef HAS_PREEMPT_ALWAYS
+  rt_preempt_always(PREEMPT);
+#endif
+
   start_rt_timer(nano2count(TICK_PERIOD));
   capacity_measure(); /* benchmark : time to run capacity() fct */
   module_time_ref=rt_get_time();
